@@ -1,7 +1,7 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 import UIKit
-class ExpandLabel : UIControl {
+public class ExpandLabel : UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(textLabel)
@@ -27,25 +27,25 @@ class ExpandLabel : UIControl {
  
     
     //展开
-    var openToken : [FoldableStyle] = [.text(title: " ... 展开", font: .boldSystemFont(ofSize: 15), foregroundColor: .blue)]
+    public  var openToken : [FoldableStyle] = [.text(title: " ... 展开", font: .boldSystemFont(ofSize: 15), foregroundColor: .blue)]
     private lazy var openAttributedString : NSAttributedString = {
         return truncationToken(true)
     }()
     //收起
-    var closeToken : [FoldableStyle] = [.text(title: "收起", font: .boldSystemFont(ofSize: 15), foregroundColor: .blue)]
+    public  var closeToken : [FoldableStyle] = [.text(title: "收起", font: .boldSystemFont(ofSize: 15), foregroundColor: .blue)]
     private lazy var closeAttributedString : NSAttributedString = {
         return truncationToken(false)
     }()
     
     //是否展开
-    var isExpanded = false
-    var attributedText: NSAttributedString?
-    var maxnumberOfLines: Int = 2
+    public var isExpanded = false
+    public var attributedText: NSAttributedString?
+    public var maxnumberOfLines: Int = 2
     
  }
 //显示
 extension ExpandLabel {
-    func reload() {
+    public  func reload() {
         guard let attributedText = attributedText else { return }
         setNeedsLayout()
         layoutIfNeeded()
@@ -70,13 +70,13 @@ extension ExpandLabel {
 }
 
 // 自定义事件通知
-extension UIControl.Event {
-    static let expandStateChanged = UIControl.Event(rawValue: 1 << 24)
+ extension UIControl.Event {
+     public  static let expandStateChanged = UIControl.Event(rawValue: 1 << 24)
 }
 
 //click
 extension ExpandLabel {
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         if let touch  =  touches.first  {  
             let point : CGPoint = touch.location(in: self.textLabel)
@@ -91,7 +91,7 @@ extension ExpandLabel {
 }
 
 extension ExpandLabel {
-    func  truncationToken(_ tonkenType : Bool) ->  NSAttributedString {
+    private   func  truncationToken(_ tonkenType : Bool) ->  NSAttributedString {
         let styles : [FoldableStyle] = tonkenType ? openToken : closeToken
         let attributedStrings : NSMutableAttributedString =  NSMutableAttributedString()
         for style in styles {
@@ -103,7 +103,7 @@ extension ExpandLabel {
 }
 /// ctLines array
 extension ExpandLabel {
-    func framelines(_ AttriString: NSAttributedString) -> [CTLine] {
+    private   func framelines(_ AttriString: NSAttributedString) -> [CTLine] {
         let framesetter = CTFramesetterCreateWithAttributedString(AttriString)
         let path = CGMutablePath(rect: CGRect(x: 0, y: 0, width: textLabel.bounds.width, height: .greatestFiniteMagnitude), transform: nil)
         let frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, nil)

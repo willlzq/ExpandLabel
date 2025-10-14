@@ -6,7 +6,7 @@
 //
 
 import UIKit
- enum FoldableStyle {
+public enum FoldableStyle {
     case text(title:String,font: UIFont,foregroundColor:UIColor) //纯文本
     case image(icon:UIImage,size:CGSize,refrenceFont: UIFont = .boldSystemFont(ofSize: 15)) //图片
     func toAttributedString() -> NSAttributedString{
