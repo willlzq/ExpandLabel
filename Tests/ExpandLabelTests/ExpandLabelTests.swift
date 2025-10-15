@@ -94,7 +94,7 @@ final class ExpandLabelTests: XCTestCase {
     }
     // 定义事件处理方法
     @objc func expandStateChanged(_ sender: ExpandLabel) {
-   
+
     }
 }
 

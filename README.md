@@ -2,7 +2,14 @@
 
 An expandable/collapsible UILabel for iOS that supports text and images with no quantity limit. 
 iOS 一个可展开/收起的UILabel，支持文字和图片，不限数量。
+### 自定义展开，图文任意结合
+![自定义展开，图文任意结合](1.png)
 
+### 自定义收起，图文任意结合
+![自定义收起，图文任意结合](2.png)
+
+### 自定义展开/收起
+![自定义展开/收起](3.png)
 ## 功能特点
 
 - 📝 支持多行文本自动截断和展开/收起功能
@@ -133,6 +140,27 @@ if let expandImage = UIImage(named: "expand_icon"),
     ]
 }
 ```
+## 关于内存释放
+在Swift中使用Core Text等C API创建的对象（如framesetter，path，frame）不需要像Objective-C那样手动release。
+
+Swift的自动引用计数(ARC)机制 ：
+- Swift会自动为Core Foundation对象管理内存，当对象超出作用域时自动释放
+- 编译器会在适当的时机插入内存管理代码
+
+Core Foundation内存管理桥接 ：
+
+- Swift为Core Foundation对象提供了自动内存管理桥接
+- 大多数以 Create 、 Copy 等前缀创建的Core Foundation对象，在Swift中都会被自动管理
+
+内存所有权转移 ：
+
+- 在Swift与Core Foundation交互时，Swift编译器会理解并尊重Core Foundation的内存管理规则
+- 当使用从Core Foundation创建的对象时，Swift会接管其内存管理
+
+与Objective-C的区别 ：
+
+- Objective-C中需要手动调用 CFRelease() 释放对象
+- Swift通过编译器优化，自动处理了这些底层内存管理操作
 
 ## 注意事项
 
@@ -140,6 +168,15 @@ if let expandImage = UIImage(named: "expand_icon"),
 2. 如果文本内容较短，未达到最大行数限制，则不会显示展开/收起按钮。
 3. 在使用图片样式时，确保图片资源已正确添加到项目中。
 4. 如需监听展开/收起事件，可以通过添加点击事件处理来实现。
+
+## 参考：
+- [Apple Developer Documentation - Core Text](https://developer.apple.com/documentation/coretext)
+- [NSAttributedString - Apple Developer Documentation](https://developer.apple.com/documentation/foundation/nsattributedstring)
+- [UIFont - Apple Developer Documentation](https://developer.apple.com/documentation/uikit/uifont)
+- [UIColor - Apple Developer Documentation](https://developer.apple.com/documentation/uikit/uicolor)
+- [iOS_UIFont的Attributes解析](https://cloud.tencent.com/developer/article/2052942)
+
+
 
 ## 许可证
 
