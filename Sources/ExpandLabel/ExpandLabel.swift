@@ -87,35 +87,16 @@ extension ExpandLabel {
             if point.y >=  0  &&  point.y <= self.bounds.size.height {
                 // 切换展开状态
                 isExpanded.toggle()
-                
                 if haveAnimate {
-                    // 开始动画前记录当前高度
-                    let currentHeight = bounds.height
-                    
-                    // 计算目标状态下的文本内容
-                    reload()
-                    
-                    // 强制布局计算新高度
-                    setNeedsLayout()
-                    layoutIfNeeded()
-                    
-                    // 获取新高度
-                    let newHeight = bounds.height
-                    
-                    // 临时恢复到原始高度，为动画做准备
-                    bounds.size.height = currentHeight
-                    layoutIfNeeded()
-                    
                     // 执行高度变化动画
                     UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseInOut, animations: { [self] in
-                        self.bounds.size.height = newHeight
+                        reload()
                         self.layoutIfNeeded()
                     }, completion: nil)
                 } else {
                     // 无动画时直接刷新
                     reload()
                 }
-             
                 // 发送状态变化通知
                 sendActions(for: .expandStateChanged)
             }
