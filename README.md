@@ -14,6 +14,7 @@ iOS 一个可展开/收起的UILabel，支持文字和图片，不限数量。
 
 - 📝 支持多行文本自动截断和展开/收起功能
 - 🎨 自定义展开/收起按钮的样式，支持文字和图片
+- 🎬 支持展开/收起动画效果
 - 🔄 支持点击事件处理
 - 📱 兼容iOS 13+和macOS 10.15+
 - 🎯 简单易用的API接口
@@ -68,8 +69,18 @@ class ViewController: UIViewController {
             .text(title: " 收起 ", font: .boldSystemFont(ofSize: 15), foregroundColor: .blue)
         ]
         
+        // 启用展开/收起动画效果
+        view.haveAnimate = true
+        // 可选：自定义动画持续时间（默认0.3秒）
+        // view.animationDuration = 0.5
+        
         // 应用设置
-        view.reload()
+    view.reload()
+    
+    // 启用展开/收起动画
+    view.haveAnimate = true
+    // 可选：设置动画持续时间
+    // view.animationDuration = 0.4
         
         return view
     }()

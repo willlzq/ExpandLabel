@@ -41,7 +41,11 @@ public class ExpandLabel : UIControl {
     public var isExpanded = false
     public var attributedText: NSAttributedString?
     public var maxnumberOfLines: Int = 2
-    
+    // 是否启用展开/收起动画
+    public var haveAnimate = false
+    // 动画持续时间，默认0.3秒
+    public var animationDuration: TimeInterval = 0.3
+
  }
 //显示
 extension ExpandLabel {
@@ -81,8 +85,37 @@ extension ExpandLabel {
         if let touch  =  touches.first  {  
             let point : CGPoint = touch.location(in: self.textLabel)
             if point.y >=  0  &&  point.y <= self.bounds.size.height {
+                // 切换展开状态
                 isExpanded.toggle()
-                reload()
+                
+                if haveAnimate {
+                    // 开始动画前记录当前高度
+                    let currentHeight = bounds.height
+                    
+                    // 计算目标状态下的文本内容
+                    reload()
+                    
+                    // 强制布局计算新高度
+                    setNeedsLayout()
+                    layoutIfNeeded()
+                    
+                    // 获取新高度
+                    let newHeight = bounds.height
+                    
+                    // 临时恢复到原始高度，为动画做准备
+                    bounds.size.height = currentHeight
+                    layoutIfNeeded()
+                    
+                    // 执行高度变化动画
+                    UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseInOut, animations: { [self] in
+                        self.bounds.size.height = newHeight
+                        self.layoutIfNeeded()
+                    }, completion: nil)
+                } else {
+                    // 无动画时直接刷新
+                    reload()
+                }
+             
                 // 发送状态变化通知
                 sendActions(for: .expandStateChanged)
             }
