@@ -1,5 +1,6 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+// 当前版本: 1.1.0 - 添加展开/收起动画功能
 
 import PackageDescription
 
